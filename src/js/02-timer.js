@@ -12,9 +12,8 @@ const refs = {
   hours: document.querySelector(`[data-hours]`),
   minutes: document.querySelector(`[data-minutes]`),
   seconds: document.querySelector(`[data-seconds]`),
+  timer: document.querySelector(`.timer`),
 };
-
-refs.button.addEventListener(`click`, startCounter);
 
 refs.button.disabled = true;
 
@@ -24,28 +23,44 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (selectedDates[0] < options.defaultDate) {
+    if (selectedDates[0] < Date.now()) {
       console.log(window.alert('Please choose a date in the future'));
       return;
     }
     refs.button.disabled = false;
-    console.log(selectedDates[0]);
-    const deltaTime = selectedDates[0] - options.defaultDate;
-    console.log(convertMs(deltaTime));
+    // console.log(selectedDates[0]);
+    const currentTime = Date.now();
+    const startTime = selectedDates[0];
+    const deltaTime = startTime - currentTime;
+    const timeComponents = convertMs(deltaTime);
+    console.log(timeComponents);
+    refs.button.addEventListener(`click`, startCounter);
+    function startCounter() {
+      setInterval(() => {
+        console.log(convertMs(deltaTime));
+        // console.log(`xx:xx:xx:xx`);
+      }, 1000);
+    }
     function updateClock({ days, hours, minutes, seconds }) {
       refs.days.textContent = `${days}`;
       refs.hours.textContent = `${hours}`;
       refs.minutes.textContent = `${minutes}`;
       refs.seconds.textContent = `${seconds}`;
     }
-    updateClock(convertMs(deltaTime));
+    updateClock(timeComponents);
   },
 };
 
 flatpickr(refs.notification, options);
 
+console.log(refs.timer);
+
 console.log(refs.notification);
 console.log(refs.button);
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, `0`);
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -55,20 +70,20 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
 
   return { days, hours, minutes, seconds };
 }
+// console.log(convertMs(timeComponents));
 
-function startCounter() {
-  setInterval(() => {}, 1000);
-}
 // _________________________________________________
 // refs.notification.addEventListener(`click`, onNotificationClick);
 // refs.button.addEventListener(`click`, showNotification);
@@ -88,24 +103,24 @@ function startCounter() {
 
 // window.alert('Please choose a date in the future');
 
-function convertMs(ms) {
-  // Number of milliseconds per unit of time
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
+// function convertMs(ms) {
+//   // Number of milliseconds per unit of time
+//   const second = 1000;
+//   const minute = second * 60;
+//   const hour = minute * 60;
+//   const day = hour * 24;
 
-  // Remaining days
-  const days = Math.floor(ms / day);
-  // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
-  // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+//   // Remaining days
+//   const days = Math.floor(ms / day);
+//   // Remaining hours
+//   const hours = Math.floor((ms % day) / hour);
+//   // Remaining minutes
+//   const minutes = Math.floor(((ms % day) % hour) / minute);
+//   // Remaining seconds
+//   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-  return { days, hours, minutes, seconds };
-}
+//   return { days, hours, minutes, seconds };
+// }
 // ___________________________________
 // console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
 // console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
