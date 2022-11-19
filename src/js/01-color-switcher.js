@@ -2,34 +2,36 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
-const startBtn = document.querySelector('[data-start]');
-const stopBtn = document.querySelector('[data-stop]');
 const refs = {
+  startBtn: document.querySelector('[data-start]'),
+  stopBtn: document.querySelector('[data-stop]'),
   body: document.querySelector(`body`),
 };
 // console.log(refs.body);
-// console.log(startBtn);
-// console.log(stopBtn);
+// console.log(refs.startBtn);
+// console.log(refs.stopBtn);
 
 let timerId = null;
 
-startBtn.addEventListener('click', event => {
+refs.startBtn.addEventListener('click', event => {
   event.preventDefault();
   timerId = setInterval(() => {
     console.log((refs.body.style.backgroundColor = getRandomHexColor()));
   }, 1000);
 });
 
-stopBtn.addEventListener('click', () => {
+refs.startBtn.addEventListener('click', hideStartButton);
+
+refs.stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
   console.log(`Interval with id ${timerId} has stopped!`);
+  showStartButton();
 });
 
-// const timerId = setInterval(callback, delay, arg1, arg2);
+function showStartButton(event) {
+  refs.startBtn.disabled = false;
+}
 
-// 1. додати івент лістенер на баттон старт (`click`, функція SetTimeOut)
-
-// function SetTimeOut() {
-
-// }
-// const timerId = setTimeout(callback, delay, arg1, arg2, ...);
+function hideStartButton(event) {
+  refs.startBtn.disabled = true;
+}
