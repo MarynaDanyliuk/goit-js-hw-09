@@ -17,10 +17,57 @@ img {
   max-width: 100%;
 }
 
+.colorpicker {
+  display: flex;
+  justify-content: center;
+  padding: 150px;
+}
+
+.colorpicker button {
+  padding: 10px 30px;
+  margin-right: 50px;
+  font-family: sans-serif;
+  font-size: medium;
+  font-weight: 500;
+  text-transform: uppercase;
+  background-color: lightsteelblue;
+  border-radius: 6;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.colorpicker button:last-child {
+  margin-right: 0;
+}
+
 .timer {
   display: flex;
 }
 .field {
-  padding: 10px;
-  margin: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 0px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.field:first-child {
+  margin-left: 0px;
+}
+
+.field:last-child {
+  margin-right: 0px;
+}
+
+.value {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: xx-large;
+}
+
+.label {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: small;
+  line-height: 2;
 }

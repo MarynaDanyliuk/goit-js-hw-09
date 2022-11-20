@@ -7,9 +7,6 @@ const refs = {
   stopBtn: document.querySelector('[data-stop]'),
   body: document.querySelector(`body`),
 };
-// console.log(refs.body);
-// console.log(refs.startBtn);
-// console.log(refs.stopBtn);
 
 let timerId = null;
 

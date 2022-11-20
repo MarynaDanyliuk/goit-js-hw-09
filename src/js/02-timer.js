@@ -33,12 +33,14 @@ const options = {
     const startTime = selectedDates[0];
     const deltaTime = startTime - currentTime;
     const timeComponents = convertMs(deltaTime);
+
     let timerId = null;
 
     refs.button.addEventListener(`click`, startCounter);
     refs.button.addEventListener(`click`, stopCounter);
 
     updateClock(timeComponents);
+
     function startCounter() {
       timerId = setInterval(() => {
         const currentTime = Date.now();
@@ -96,7 +98,6 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-// console.log(convertMs(timeComponents));
 
 // _________________________________________________
 // refs.notification.addEventListener(`click`, onNotificationClick);
