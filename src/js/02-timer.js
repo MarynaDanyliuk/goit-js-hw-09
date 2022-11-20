@@ -36,33 +36,35 @@ const options = {
     let timerId = null;
 
     refs.button.addEventListener(`click`, startCounter);
+    refs.button.addEventListener(`click`, stopCounter);
+
     updateClock(timeComponents);
     function startCounter() {
       timerId = setInterval(() => {
         const currentTime = Date.now();
-        // const startTime = selectedDates[0];
         const deltaTime = startTime - currentTime;
         const { days, hours, minutes, seconds } = convertMs(deltaTime);
 
         console.log(convertMs(selectedDates[0] - Date.now()));
 
         console.log(`${days}:${hours}:${minutes}:${seconds}`);
+
         refs.days.textContent = `${days}`;
         refs.hours.textContent = `${hours}`;
         refs.minutes.textContent = `${minutes}`;
         refs.seconds.textContent = `${seconds}`;
       }, 1000);
-      // if (deltaTime === 0) {
-      //   clearInterval(timerId);
-      // }
     }
-    // function stopCounter() {
-    //   clearInterval(timerId);
-    // }
+    function stopCounter() {
+      setTimeout(() => {
+        clearInterval(timerId);
+      }, selectedDates[0] - Date.now());
+    }
   },
 };
 
 flatpickr(refs.notification, options);
+
 function updateClock({ days, hours, minutes, seconds }) {
   refs.days.textContent = `${days}`;
   refs.hours.textContent = `${hours}`;
