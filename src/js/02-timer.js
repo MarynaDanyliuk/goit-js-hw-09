@@ -28,35 +28,47 @@ const options = {
       return;
     }
     refs.button.disabled = false;
-    // console.log(selectedDates[0]);
+
     const currentTime = Date.now();
     const startTime = selectedDates[0];
     const deltaTime = startTime - currentTime;
     const timeComponents = convertMs(deltaTime);
-    console.log(timeComponents);
+    let timerId = null;
+
     refs.button.addEventListener(`click`, startCounter);
-    function startCounter() {
-      setInterval(() => {
-        console.log(convertMs(deltaTime));
-        // console.log(`xx:xx:xx:xx`);
-      }, 1000);
-    }
-    function updateClock({ days, hours, minutes, seconds }) {
-      refs.days.textContent = `${days}`;
-      refs.hours.textContent = `${hours}`;
-      refs.minutes.textContent = `${minutes}`;
-      refs.seconds.textContent = `${seconds}`;
-    }
     updateClock(timeComponents);
+    function startCounter() {
+      timerId = setInterval(() => {
+        const currentTime = Date.now();
+        // const startTime = selectedDates[0];
+        const deltaTime = startTime - currentTime;
+        const { days, hours, minutes, seconds } = convertMs(deltaTime);
+
+        console.log(convertMs(selectedDates[0] - Date.now()));
+
+        console.log(`${days}:${hours}:${minutes}:${seconds}`);
+        refs.days.textContent = `${days}`;
+        refs.hours.textContent = `${hours}`;
+        refs.minutes.textContent = `${minutes}`;
+        refs.seconds.textContent = `${seconds}`;
+      }, 1000);
+      // if (deltaTime === 0) {
+      //   clearInterval(timerId);
+      // }
+    }
+    // function stopCounter() {
+    //   clearInterval(timerId);
+    // }
   },
 };
 
 flatpickr(refs.notification, options);
-
-console.log(refs.timer);
-
-console.log(refs.notification);
-console.log(refs.button);
+function updateClock({ days, hours, minutes, seconds }) {
+  refs.days.textContent = `${days}`;
+  refs.hours.textContent = `${hours}`;
+  refs.minutes.textContent = `${minutes}`;
+  refs.seconds.textContent = `${seconds}`;
+}
 
 function addLeadingZero(value) {
   return String(value).padStart(2, `0`);
@@ -134,3 +146,14 @@ function convertMs(ms) {
 // }
 
 // ____________________________________________
+// console.log(
+//   (refs.days.textContent = `${days}`),
+//   (refs.hours.textContent = `${hours}`),
+//   (refs.minutes.textContent = `${minutes}`),
+//   (refs.seconds.textContent = `${seconds}`)
+// );
+// ___________________________________________
+// console.log(refs.timer);
+
+// console.log(refs.notification);
+// console.log(refs.button);
