@@ -22,6 +22,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  isActive: false,
   onClose(selectedDates) {
     if (selectedDates[0] < Date.now()) {
       console.log(window.alert('Please choose a date in the future'));
@@ -42,6 +43,11 @@ const options = {
     updateClock(timeComponents);
 
     function startCounter() {
+      if (options.isActive) {
+        return;
+      }
+      refs.button.disabled = true;
+      options.isActive = true;
       timerId = setInterval(() => {
         const currentTime = Date.now();
         const deltaTime = startTime - currentTime;
@@ -58,6 +64,7 @@ const options = {
       }, 1000);
     }
     function stopCounter() {
+      options.isActive = false;
       setTimeout(() => {
         clearInterval(timerId);
       }, selectedDates[0] - Date.now());
