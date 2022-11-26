@@ -43,15 +43,16 @@ function onFormSubmit(event) {
   for (let i = 0; i < amount.value; i += 1) {
     let position = i + 1;
     let nextDelay = delayStart + i * nextStep;
+
     createPromise(position, nextDelay)
-      .then(({ position, delay }) => {
+      .then(({ position, nextDelay }) => {
         Notiflix.Notify.success(
-          `✅ Fulfilled promise ${position} in ${delay}ms`
+          `✅ Fulfilled promise ${position} in ${nextDelay}ms`
         );
       })
-      .catch(({ position, delay }) => {
+      .catch(({ position, nextDelay }) => {
         Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`
+          `❌ Rejected promise ${position} in ${nextDelay}ms`
         );
       });
   }
