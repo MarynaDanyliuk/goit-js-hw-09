@@ -27,13 +27,6 @@ function createPromise(position, delay) {
 
 function onFormSubmit(event) {
   event.preventDefault();
-  // const formData = new FormData(event.currentTarget);
-  // const data = {
-  //   delay: Number(formElements.delay.value),
-  //   step: Number(formElements.step.value),
-  //   amount: Number(formElements.amount.value),
-  // };
-  // console.log(data);
   const {
     elements: { delay, step, amount },
   } = event.target;
@@ -59,6 +52,14 @@ function onFormSubmit(event) {
 
   formElements.reset();
 }
+
+// const formData = new FormData(event.currentTarget);
+// const data = {
+//   delay: Number(formElements.delay.value),
+//   step: Number(formElements.step.value),
+//   amount: Number(formElements.amount.value),
+// };
+// console.log(data);
 
 // ________
 
