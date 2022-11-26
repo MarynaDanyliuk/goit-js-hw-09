@@ -12,8 +12,6 @@ refs.form.addEventListener(`submit`, onFormSubmit);
 
 const formElements = document.querySelector('.form');
 
-console.log(formElements.elements);
-
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
@@ -29,14 +27,23 @@ function createPromise(position, delay) {
 
 function onFormSubmit(event) {
   event.preventDefault();
-
+  const formData = new FormData(event.currentTarget);
+  const data = {
+    delay: Number(formElements.delay.value),
+    step: Number(formElements.step.value),
+    amount: Number(formElements.amount.value),
+  };
+  console.log(data);
   const {
     elements: { delay, step, amount },
   } = event.target;
-  let delay1 = Number(delay.value);
+  let delayStart = Number(delay.value);
   let nextStep = Number(step.value);
-  for (let position = 0; position < amount.value; position += 1) {
-    createPromise(position + 1, delay1 + position * nextStep)
+
+  for (let i = 0; i < amount.value; i += 1) {
+    let position = i + 1;
+    let nextDelay = delayStart + i * nextStep;
+    createPromise(position, nextDelay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
@@ -48,6 +55,8 @@ function onFormSubmit(event) {
         );
       });
   }
+
+  formElements.reset();
 }
 
 // ________
