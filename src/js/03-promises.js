@@ -17,9 +17,9 @@ function createPromise(position, delay) {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        resolve(`✅ Fulfilled promise ${position} in ${delay} ms`);
+        resolve({ position, delay });
       } else {
-        reject(`❌ Rejected promise ${position} in ${delay} ms`);
+        reject({ position, delay });
       }
     }, delay);
   });
@@ -38,14 +38,14 @@ function onFormSubmit(event) {
     let nextDelay = delayStart + i * nextStep;
 
     createPromise(position, nextDelay)
-      .then(({ position, nextDelay }) => {
+      .then(({ position, delay }) => {
         Notiflix.Notify.success(
-          `✅ Fulfilled promise ${position} in ${nextDelay}ms`
+          `✅ Fulfilled promise ${position} in ${delay}ms`
         );
       })
-      .catch(({ position, nextDelay }) => {
+      .catch(({ position, delay }) => {
         Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${nextDelay}ms`
+          `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
   }
