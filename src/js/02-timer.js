@@ -45,6 +45,7 @@ const options = {
     updateClock(timeComponents);
 
     function startCounter() {
+      Notiflix.Notify.success(`✅ Timer start count!!!`);
       // if (options.enableTime) {
       //   return;
       // }
