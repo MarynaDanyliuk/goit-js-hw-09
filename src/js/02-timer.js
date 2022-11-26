@@ -25,7 +25,8 @@ const options = {
   // isActive: false,
   onClose(selectedDates) {
     if (selectedDates[0] < Date.now()) {
-      console.log(window.alert('Please choose a date in the future'));
+      Notiflix.Notify.failure('Please choose a date in the future');
+      // console.log(window.alert('Please choose a date in the future'));
       return;
     }
 
